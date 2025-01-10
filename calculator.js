@@ -4,6 +4,7 @@ const btn = document.querySelectorAll('button');
 firstNumber = '';
 secondNumber = '';
 operator = '';
+currentTotal = '';
 
 
 function addition(num1, num2) {
@@ -27,6 +28,7 @@ function resetCalc() {
     firstNumber = '';
     secondNumber = '';
     operator = '';
+    currentTotal = '';
 }
 
 
@@ -60,6 +62,9 @@ btn.forEach(button => {
             clickedButton === '*' || 
             clickedButton === '/') {
             operator += clickedButton;
+            display.textContent = '';
+            display.textContent = currentTotal;
+            display.appendChild(displayText);
 
         } else if (operator !== '' && clickedButton !== '=' && clickedButton !== 'AC') {
             secondNumber += clickedButton;
@@ -72,9 +77,16 @@ btn.forEach(button => {
         if (clickedButton === '=') {
             display.textContent = ''; 
             const result = operate(firstNumber,operator,secondNumber);
+            // currentTotal += result;
+
             const displayText = document.createElement('span');
             displayText.textContent = result;
             display.appendChild(displayText);
+
+            firstNumber = result;
+            secondNumber = '';
+            operator = '';
+            
         }
         console.log(clickedButton);
         

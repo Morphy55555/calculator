@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    margin: auto;
+    /* border: solid black 1px; */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.display {
+    height: 30px;
+    width: auto;
+    display: flex;
+    justify-items: flex-end;
+}
+
+button {
+    height: 40px;
+    width: 40px;
+    background-color: orange;
+    border-radius: 10px;
+}
