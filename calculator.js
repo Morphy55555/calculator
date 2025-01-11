@@ -20,6 +20,9 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
+    if (num2 === '0') {
+        return 'Get out of etttt';
+    }
     return num1 / num2;
 }
 
@@ -28,7 +31,7 @@ function resetCalc() {
     firstNumber = '';
     secondNumber = '';
     operator = '';
-    currentTotal = '';
+    
 }
 
 
@@ -49,52 +52,68 @@ function operate(firstN, opp, secondN) {
 }
 
 
+let resetDisplay = false; 
+
 function displayOnBtnClick(){
-btn.forEach(button => {
-    button.addEventListener('click', (e) => {
-        clickedButton = e.target.id;
-        const displayText = document.createElement('span');
-        displayText.textContent = clickedButton;
-        display.appendChild(displayText);
+    btn.forEach(button => {
+        button.addEventListener('click', (e) => {
+            clickedButton = e.target.id;
 
-        if (clickedButton === '-' || 
-            clickedButton === '+' || 
-            clickedButton === '*' || 
-            clickedButton === '/') {
-            operator += clickedButton;
-            display.textContent = '';
-            display.textContent = currentTotal;
-            display.appendChild(displayText);
-
-        } else if (operator !== '' && clickedButton !== '=' && clickedButton !== 'AC') {
-            secondNumber += clickedButton;
-        } else  if (clickedButton !== '=' && clickedButton !== 'AC') {
-            firstNumber += clickedButton;
-        } else if (clickedButton === 'AC') {
-            resetCalc();
-        };
-
-        if (clickedButton === '=') {
-            display.textContent = ''; 
-            const result = operate(firstNumber,operator,secondNumber);
-            // currentTotal += result;
-
-            const displayText = document.createElement('span');
-            displayText.textContent = result;
-            display.appendChild(displayText);
-
-            firstNumber = result;
-            secondNumber = '';
-            operator = '';
             
-        }
-        console.log(clickedButton);
-        
-    })
-});
-};
+            if (resetDisplay && !isNaN(clickedButton)) {
+                display.textContent = ''; 
+                resetDisplay = false; 
+            }
 
+            const displayText = document.createTextNode(' ');
+            displayText.textContent = clickedButton;
+            display.appendChild(displayText);
 
+            if (clickedButton === '-' || 
+                clickedButton === '+' || 
+                clickedButton === '*' || 
+                clickedButton === '/') {
+                operator += clickedButton;
+                display.textContent = '';
+                display.appendChild(displayText);
+                resetDisplay = true; 
+            } else if (operator !== '' && clickedButton !== '=' && clickedButton !== 'AC') {
+                secondNumber += clickedButton;
+            } else if (clickedButton !== '=' && clickedButton !== 'AC') {
+                firstNumber += clickedButton;
+            } else if (clickedButton === 'AC') {
+                resetCalc();
+            }
 
+            if (clickedButton === '=') {
+                display.textContent = ''; 
+                const result = operate(firstNumber, operator, secondNumber);
+                
+                displayText.textContent = result;
+                display.appendChild(displayText);
+
+                firstNumber = result;
+                secondNumber = '';
+                operator = '';
+                resetDisplay = true; 
+            }
+
+            if (operator.length > 1) { 
+                const displayText = document.createTextNode(' ');
+                const result = operate(firstNumber, operator.charAt(0), secondNumber);
+                
+                displayText.textContent = result;
+                display.appendChild(displayText);
+
+                firstNumber = result;
+                secondNumber = '';
+                operator = clickedButton; 
+                resetDisplay = true; 
+            }
+            
+            console.log(clickedButton);
+        });
+    });
+}
 
 displayOnBtnClick();
