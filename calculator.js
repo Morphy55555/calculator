@@ -77,8 +77,10 @@ function displayOnBtnClick(){
                 resetDisplay = false; // Reset the flag
             }
 
+            if (clickedButton !== '=') {
             displayText.textContent = clickedButton;
             display.appendChild(displayText);
+            }
 
             if (clickedButton === '-' || 
                 clickedButton === '+' || 
@@ -101,7 +103,10 @@ function displayOnBtnClick(){
                 resetCalc();
             }
 
-            if (clickedButton === '=' || clickedButton === 'x2') {
+            if (clickedButton === '=' || clickedButton === 'x2' && operator !== '') {
+                if (operator === '') {
+                    clickedButton = '';
+                } else {
                 display.textContent = ''; 
                 const result = operate(firstNumber, operator, secondNumber);
                 
@@ -112,9 +117,10 @@ function displayOnBtnClick(){
                 secondNumber = '';
                 operator = '';
                 resetDisplay = true; 
+                }
             }
 
-            if (operator.length > 1) { 
+            if (operator.length > 1) {  //Functionality for calculations via pressing operators
                 const result = operate(firstNumber, operator.charAt(0), secondNumber);
                 
                 displayText.textContent = result;
