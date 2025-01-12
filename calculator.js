@@ -111,11 +111,10 @@ function displayOnBtnClick(){
                 firstNumber = result;
                 secondNumber = '';
                 operator = '';
-                resetDisplay = true; // Set flag to clear display for the next input
+                resetDisplay = true; 
             }
 
             if (operator.length > 1) { 
-                // const displayText = document.createTextNode(' ');
                 const result = operate(firstNumber, operator.charAt(0), secondNumber);
                 
                 displayText.textContent = result;
@@ -123,8 +122,8 @@ function displayOnBtnClick(){
 
                 firstNumber = result;
                 secondNumber = '';
-                operator = clickedButton; // Set operator for next operation
-                resetDisplay = true; // Set flag to clear display for the next input
+                operator = clickedButton; 
+                resetDisplay = true; 
             }
             
             btn.forEach(button => button.classList.remove('active'));
