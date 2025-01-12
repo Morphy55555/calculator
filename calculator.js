@@ -26,6 +26,16 @@ function divide(num1, num2) {
     return num1 / num2;
 }
 
+function toThePowerOf(num1, num2) {
+    return num1 ** num2;
+}
+
+function squared(num1) {
+    
+    return num1 * num1; 
+}
+
+
 function resetCalc() {
     display.textContent = '';
     firstNumber = '';
@@ -40,12 +50,13 @@ function operate(firstN, opp, secondN) {
         '+': addition,
         '-': subtract,
         '*': multiply,
-        '/': divide
+        '/': divide,
+        '^' : toThePowerOf,
+        'x2' : squared
     };
 
     const operationFunction = operations[opp]; 
     if (operationFunction) {
-        console.log(operationFunction(firstN, secondN))
         return operationFunction(firstN, secondN); 
     
 }
@@ -58,34 +69,39 @@ function displayOnBtnClick(){
     btn.forEach(button => {
         button.addEventListener('click', (e) => {
             clickedButton = e.target.id;
-
+            const displayText = document.createTextNode(' ');
+            
             
             if (resetDisplay && !isNaN(clickedButton)) {
-                display.textContent = ''; 
-                resetDisplay = false; 
+                display.textContent = ''; // Clear the display
+                resetDisplay = false; // Reset the flag
             }
 
-            const displayText = document.createTextNode(' ');
             displayText.textContent = clickedButton;
             display.appendChild(displayText);
 
             if (clickedButton === '-' || 
                 clickedButton === '+' || 
                 clickedButton === '*' || 
-                clickedButton === '/') {
-                operator += clickedButton;
+                clickedButton === '/' || 
+                clickedButton === '^' || 
+                clickedButton === 'x2') {
+
+                operator += clickedButton;   //Assigning operator value 
+
                 display.textContent = '';
                 display.appendChild(displayText);
-                resetDisplay = true; 
-            } else if (operator !== '' && clickedButton !== '=' && clickedButton !== 'AC') {
+                resetDisplay = true; // Set flag to clear display for the next number
+
+            } else if (operator !== '' && clickedButton !== '=' && clickedButton !== 'AC') {       //If there is a operator value (it's not empty), assign to second number 
                 secondNumber += clickedButton;
             } else if (clickedButton !== '=' && clickedButton !== 'AC') {
-                firstNumber += clickedButton;
+                firstNumber += clickedButton;  //Assign to first number when numbers are clicked
             } else if (clickedButton === 'AC') {
                 resetCalc();
             }
 
-            if (clickedButton === '=') {
+            if (clickedButton === '=' || clickedButton === 'x2') {
                 display.textContent = ''; 
                 const result = operate(firstNumber, operator, secondNumber);
                 
@@ -95,11 +111,11 @@ function displayOnBtnClick(){
                 firstNumber = result;
                 secondNumber = '';
                 operator = '';
-                resetDisplay = true; 
+                resetDisplay = true; // Set flag to clear display for the next input
             }
 
             if (operator.length > 1) { 
-                const displayText = document.createTextNode(' ');
+                // const displayText = document.createTextNode(' ');
                 const result = operate(firstNumber, operator.charAt(0), secondNumber);
                 
                 displayText.textContent = result;
@@ -107,10 +123,14 @@ function displayOnBtnClick(){
 
                 firstNumber = result;
                 secondNumber = '';
-                operator = clickedButton; 
-                resetDisplay = true; 
+                operator = clickedButton; // Set operator for next operation
+                resetDisplay = true; // Set flag to clear display for the next input
             }
             
+            btn.forEach(button => button.classList.remove('active'));
+            button.classList.add('active');
+            
+
             console.log(clickedButton);
         });
     });

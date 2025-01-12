@@ -35,6 +35,11 @@ button {
     width: 80px;
     background-color: rgb(243, 168, 30);
     border-radius: 6px;
+    font-size: 20px;
+}
+
+button.active {
+    background-color: rgb(200, 129, 7);
 }
 
 .border {
@@ -43,6 +48,16 @@ button {
     background-color: black;
     font-size: 0px;
 }
+
+sup {
+    font-size: 0.6em; /* Adjust the size as needed */
+    vertical-align: top; /* Keeps it above the baseline */
+    position: relative;
+    top: -0.2em; /* Fine-tune the vertical position */
+    
+}
+
+
 
 
 
